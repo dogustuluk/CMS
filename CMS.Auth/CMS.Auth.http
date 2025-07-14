@@ -1,0 +1,6 @@
+@CMS.Auth_HostAddress = http://localhost:5021
+
+GET {{CMS.Auth_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
