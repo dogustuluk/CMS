@@ -32,7 +32,6 @@
     <Folder Include="Features\Update\" />
     <Folder Include="Features\ResetPassword\" />
     <Folder Include="Features\RefreshToken\" />
-    <Folder Include="Services\" />
   </ItemGroup>
 
 </Project>

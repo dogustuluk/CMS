@@ -4,6 +4,7 @@ using CMS.Auth.Features.Register;
 using CMS.Auth.Infrastructure.Configurations;
 using CMS.Auth.Infrastructure.Data;
 using CMS.Auth.Infrastructure.Services;
+using CMS.Auth.Tenant;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -24,7 +25,8 @@ public static class DependecyInjection
         services.AddMediatR(typeof(RegisterUserHandler).Assembly);
         services.AddValidatorsFromAssembly(typeof(RegisterUserHandler).Assembly);
 
-        services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+        services.AddScoped<ITenantAccessor, TenantAccessor>();
 
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<ITokenHandler, TokenHandler>();
