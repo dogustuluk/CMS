@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplicationServices(builder.Configuration);
 
 #region JWT
-var jwtSettings = builder.Configuration.GetSection("JWT").Get<JWTSettings>();
+var jwtSettings = builder.Configuration.GetSection("Token").Get<JWTSettings>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
