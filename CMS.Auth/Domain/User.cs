@@ -9,4 +9,6 @@ public class User
     public string PasswordHash { get; set; }
     public bool IsActive { get; set; }
     public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+    public string? RefreshToken { get; set; }
+    public DateTime RefreshTokenExpiresAt { get; set; }
 }

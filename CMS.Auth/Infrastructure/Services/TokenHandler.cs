@@ -34,13 +34,16 @@ public class TokenHandler : ITokenHandler
 
         var expiresAt = DateTime.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes);
 
+        var now = DateTime.UtcNow;
+
+
         var token = new JwtSecurityToken
             (
             issuer: _jwtSettings.Issuer,
             audience: _jwtSettings.Audience,
             claims: claims,
             expires: expiresAt,
-            notBefore: DateTime.UtcNow,
+            notBefore: now.AddSeconds(-1),
             signingCredentials: credentials
             );
 
