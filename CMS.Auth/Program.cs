@@ -3,7 +3,6 @@ using CMS.Auth.Features.Login;
 using CMS.Auth.Features.RefreshToken;
 using CMS.Auth.Features.Register;
 using CMS.Auth.Infrastructure.Configurations;
-using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
@@ -46,31 +45,18 @@ var app = builder.Build();
 
 #region minimal api
 //register iþlemi
-app.MapPost("/auth/register", async (RegisterUserCommand command, IMediator mediator) =>
-{
-    var response = await mediator.Send(command);
-    if (!response.Success)
-        return Results.BadRequest(new { error = response.ErrorMessage });
-    return Results.Ok(new { message = "Kayýt Baþarýlý" });
-});
+app.MapPostEndpoint<RegisterUserCommand, RegisterUserResponse>(
+    "/auth/register"
+);
 
 //Token Create
-app.MapPost("/auth/createToken", async (AuthenticateUserCommand command, IMediator mediator) =>
-{
-    var response = await mediator.Send(command);
-    if (!response.Status)
-        return Results.BadRequest(new { error = response.Message });
-    return Results.Ok(new { message = "Giriþ Baþarýlý" });
-});
+app.MapPostEndpoint<AuthenticateUserCommand, AuthenticateUserResponse>(
+    "/auth/createToken");
 
 //Create Token By Refresh Token
-app.MapPost("auth/createTokenByRefreshToken", async (RefreshTokenCommand command, IMediator mediator) =>
-{
-    var response = await mediator.Send(command);
-    if (!response.Status)
-        return Results.BadRequest(new { error = response.Message });
-    return Results.Ok(new { message = "Ýþlem Baþarýlý" });
-});
+app.MapPostEndpoint<RefreshTokenCommand, RefreshTokenResponse>(
+    "auth/createTokenByRefreshToken");
+
 #endregion
 
 
