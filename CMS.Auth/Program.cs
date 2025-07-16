@@ -1,5 +1,6 @@
 using CMS.Auth.Extensions;
 using CMS.Auth.Features.Login;
+using CMS.Auth.Features.RefreshToken;
 using CMS.Auth.Features.Register;
 using CMS.Auth.Infrastructure.Configurations;
 using MediatR;
@@ -53,13 +54,22 @@ app.MapPost("/auth/register", async (RegisterUserCommand command, IMediator medi
     return Results.Ok(new { message = "Kayýt Baþarýlý" });
 });
 
-//login
-app.MapPost("/auth/login", async (LoginCommand command, IMediator mediator) =>
+//Token Create
+app.MapPost("/auth/createToken", async (AuthenticateUserCommand command, IMediator mediator) =>
 {
     var response = await mediator.Send(command);
     if (!response.Status)
         return Results.BadRequest(new { error = response.Message });
     return Results.Ok(new { message = "Giriþ Baþarýlý" });
+});
+
+//Create Token By Refresh Token
+app.MapPost("auth/createTokenByRefreshToken", async (RefreshTokenCommand command, IMediator mediator) =>
+{
+    var response = await mediator.Send(command);
+    if (!response.Status)
+        return Results.BadRequest(new { error = response.Message });
+    return Results.Ok(new { message = "Ýþlem Baþarýlý" });
 });
 #endregion
 
@@ -73,8 +83,5 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.UseAuthorization();
-
-app.MapControllers();
 
 app.Run();

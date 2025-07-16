@@ -2,9 +2,9 @@
 
 namespace CMS.Auth.Features.Login;
 
-public class LoginValidator : AbstractValidator<LoginCommand>
+public class AuthenticateUserValidator : AbstractValidator<AuthenticateUserCommand>
 {
-    public LoginValidator()
+    public AuthenticateUserValidator()
     {
         RuleFor(x => x.Email)
             .NotEmpty().WithMessage("Email Boş Olamaz!")
