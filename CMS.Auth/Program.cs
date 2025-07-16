@@ -5,7 +5,6 @@ using CMS.Auth.Features.Register;
 using CMS.Auth.Features.ResetPassword;
 using CMS.Auth.Infrastructure.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -41,14 +40,6 @@ builder.Services.AddAuthentication(options =>
 //api rate limit services
 builder.Services.AddRateLimiter(async options =>
 {
-    options.AddFixedWindowLimiter(policyName: "FixedWindowPolicy", configureOptions: configOptions =>
-    {
-        configOptions.QueueLimit = 0; //yeni istekleri sýraya almaz; direkt reddeder.
-        configOptions.PermitLimit = 10; //maks 5 istek için.
-        configOptions.Window = TimeSpan.FromMinutes(1); //1 dakika aralýk
-        configOptions.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
-    });
-
     options.OnRejected = async (context, token) =>
     {
         context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
@@ -74,14 +65,14 @@ var app = builder.Build();
 app.MapPostEndpoint<RegisterUserCommand, RegisterUserResponse>("/auth/register");
 
 //Token Create
-app.MapPostEndpoint<AuthenticateUserCommand, AuthenticateUserResponse>("/auth/createToken", rateLimitPolicyName: "FixedWindowPolicy");
+app.MapPostEndpoint<AuthenticateUserCommand, AuthenticateUserResponse>("/auth/createToken", isHaveRateLimit: true);
 
 //Create Token By Refresh Token
-app.MapPostEndpoint<RefreshTokenCommand, RefreshTokenResponse>("auth/createTokenByRefreshToken", rateLimitPolicyName: "FixedWindowPolicy");
+app.MapPostEndpoint<RefreshTokenCommand, RefreshTokenResponse>("auth/createTokenByRefreshToken", isHaveRateLimit: true);
 
 
 //Reset Password
-app.MapPostEndpoint<ResetPasswordCommand, ResetPasswordResponse>("auth/resetPassword", rateLimitPolicyName: "FixedWindowPolicy");
+app.MapPostEndpoint<ResetPasswordCommand, ResetPasswordResponse>("auth/resetPassword", isHaveRateLimit: true);
 #endregion
 
 
