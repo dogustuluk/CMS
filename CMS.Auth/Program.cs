@@ -62,7 +62,7 @@ var app = builder.Build();
 
 #region minimal api
 //register iþlemi
-app.MapPostEndpoint<RegisterUserCommand, RegisterUserResponse>("/auth/register");
+app.MapPostEndpoint<RegisterUserCommand, RegisterUserResponse>("/auth/register", isHaveRateLimit: true);
 
 //Token Create
 app.MapPostEndpoint<AuthenticateUserCommand, AuthenticateUserResponse>("/auth/createToken", isHaveRateLimit: true);
