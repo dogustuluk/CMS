@@ -1,8 +1,10 @@
 using CMS.Auth.Extensions;
+using CMS.Auth.Features.GetUser;
 using CMS.Auth.Features.Login;
 using CMS.Auth.Features.RefreshToken;
 using CMS.Auth.Features.Register;
 using CMS.Auth.Features.ResetPassword;
+using CMS.Auth.Features.ValidateTenant;
 using CMS.Auth.Infrastructure.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -68,11 +70,17 @@ app.MapPostEndpoint<RegisterUserCommand, RegisterUserResponse>("/auth/register",
 app.MapPostEndpoint<AuthenticateUserCommand, AuthenticateUserResponse>("/auth/createToken", isHaveRateLimit: true);
 
 //Create Token By Refresh Token
-app.MapPostEndpoint<RefreshTokenCommand, RefreshTokenResponse>("auth/createTokenByRefreshToken", isHaveRateLimit: true);
+app.MapPostEndpoint<RefreshTokenCommand, RefreshTokenResponse>("/auth/createTokenByRefreshToken", isHaveRateLimit: true);
 
 
 //Reset Password
-app.MapPostEndpoint<ResetPasswordCommand, ResetPasswordResponse>("auth/resetPassword", isHaveRateLimit: true);
+app.MapPostEndpoint<ResetPasswordCommand, ResetPasswordResponse>("/auth/resetPassword", isHaveRateLimit: true);
+
+//Get User
+app.MapPostEndpoint<GetUserCommand, GetUserResponse>("/auth/getUser");
+
+//Check Tenant
+app.MapPostEndpoint<ValidateTenantCommand, ValidateTenantResponse>("/auth/validateTenant", isHaveRateLimit: true, limit: 10);
 #endregion
 
 
