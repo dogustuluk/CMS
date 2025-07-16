@@ -4,12 +4,15 @@ namespace CMS.Auth.Extensions;
 
 public static class EndpointRouteBuilderExtensions
 {
-    public static void MapPostEndpoint<TRequest, TResponse>(this WebApplication app, string endpoint) where TRequest : IRequest<TResponse>
+    public static void MapPostEndpoint<TRequest, TResponse>(this WebApplication app, string endpoint, string? rateLimitPolicyName = null) where TRequest : IRequest<TResponse>
     {
-        app.MapPost(endpoint, async (TRequest request, IMediator mediator) =>
+        var routeHandler = app.MapPost(endpoint, async (TRequest request, IMediator mediator) =>
         {
             var response = await mediator.Send(request);
             return Results.Json(response);
         });
+
+        if (rateLimitPolicyName != null)
+            routeHandler.RequireRateLimiting(rateLimitPolicyName);
     }
 }
