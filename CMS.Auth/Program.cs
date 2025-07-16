@@ -2,6 +2,7 @@ using CMS.Auth.Extensions;
 using CMS.Auth.Features.Login;
 using CMS.Auth.Features.RefreshToken;
 using CMS.Auth.Features.Register;
+using CMS.Auth.Features.ResetPassword;
 using CMS.Auth.Infrastructure.Configurations;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.RateLimiting;
@@ -78,6 +79,9 @@ app.MapPostEndpoint<AuthenticateUserCommand, AuthenticateUserResponse>("/auth/cr
 //Create Token By Refresh Token
 app.MapPostEndpoint<RefreshTokenCommand, RefreshTokenResponse>("auth/createTokenByRefreshToken", rateLimitPolicyName: "FixedWindowPolicy");
 
+
+//Reset Password
+app.MapPostEndpoint<ResetPasswordCommand, ResetPasswordResponse>("auth/resetPassword", rateLimitPolicyName: "FixedWindowPolicy");
 #endregion
 
 
