@@ -54,4 +54,22 @@ public class AuthController : ControllerBase
         return Ok(new { sub, email });
     }
 
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        var expiredCookieOpt = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Expires = DateTimeOffset.UtcNow.AddDays(-1)
+        };
+
+        Response.Cookies.Append("accessToken", "", expiredCookieOpt);
+        Response.Cookies.Append("refreshToken", "", expiredCookieOpt);
+
+        return Ok(new { message = "Çıkış Yapıldı" });
+
+    }
+
 }

@@ -9,10 +9,12 @@ export const AuthProvider = ({ children }) => {
     const [loading, setLoading] = useState(true);
 
 
+  
+
     useEffect(() => {
         const checkAuth = async () => {
             try {
-                const res = await axiosInstance.get('/Auth/me', { withCredentials: true });
+                const res = await axiosInstance.get('/Auth/me');
                 setUser(res.data);
             } catch {
                 setUser(null);
@@ -20,19 +22,28 @@ export const AuthProvider = ({ children }) => {
                 setLoading(false);
             }
         };
-
         checkAuth();
     }, []);
 
-
-    const loginUser = (tokens) => {
-        setUser(jwtDecode(tokens.accessToken));
-
+    const loginUser = async (email, password) => {
+        try {
+            await axiosInstance.post('/Auth/login', { email, password });
+            const res = await axiosInstance.get('/Auth/me');
+            setUser(res.data);
+        } catch (err) {
+            setUser(null);
+            throw err;
+        }
     };
 
-    const logoutUser = () => {
-        setUser(null);
-    };
+
+    const logoutUser = async () => {
+        try {
+            await axiosInstance.post('/Auth/logout', {}, { withCredentials: true });
+            setUser(null);
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }    };
 
     return (
         <AuthContext.Provider value={{ user, loginUser, logoutUser, loading }}>

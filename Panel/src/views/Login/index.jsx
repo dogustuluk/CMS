@@ -24,7 +24,6 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
-import { login } from '../../services/authService';
 import { useAuth } from '../../context/AuthContext';
 
 import Logo from 'assets/images/logo-dark.svg';
@@ -98,9 +97,7 @@ const AuthLogin = () => {
                                     })}
                                     onSubmit={async (values, { setErrors, setSubmitting }) => {
                                         try {
-                                            const response = await login(values.email, values.password);
-                                            console.log("response-----:", response);
-                                            loginUser({ accessToken: response.accessToken, refreshToken: response.refreshToken });
+                                            const response = await loginUser(values.email, values.password);
                                             navigate('/');
                                         } catch (error) {
                                             console.error(error);

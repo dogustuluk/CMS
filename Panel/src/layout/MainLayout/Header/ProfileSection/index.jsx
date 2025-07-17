@@ -12,10 +12,14 @@ import SettingsTwoToneIcon from '@mui/icons-material/SettingsTwoTone';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import MeetingRoomTwoToneIcon from '@mui/icons-material/MeetingRoomTwoTone';
 
+import { useAuth } from '../../../../context/AuthContext';
 // ==============================|| PROFILE SECTION ||============================== //
 
 const ProfileSection = () => {
-  const theme = useTheme();
+    const theme = useTheme();
+
+    const { logoutUser } = useAuth();
+
 
   const [selectedIndex, setSelectedIndex] = React.useState(1);
   const [open, setOpen] = React.useState(false);
@@ -122,8 +126,11 @@ const ProfileSection = () => {
                   <ListItemButton selected={selectedIndex === 4}>
                     <ListItemIcon>
                       <MeetingRoomTwoToneIcon />
-                    </ListItemIcon>
-                    <ListItemText primary="Logout" />
+                                      </ListItemIcon>
+
+                                      <ListItemButton onClick={logoutUser }>
+                         <ListItemText primary="Logout" />
+                    </ListItemButton>
                   </ListItemButton>
                 </List>
               </ClickAwayListener>
