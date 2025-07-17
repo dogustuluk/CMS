@@ -15,4 +15,8 @@
     <ProjectReference Include="..\CMS.Application\CMS.Application.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
+
 </Project>

@@ -1,6 +1,7 @@
 ﻿using CMS.Application.Features.Commands.Login;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace CMS.API.Controllers;
 [Route("api/[controller]")]
@@ -14,8 +15,43 @@ public class AuthController : ControllerBase
         if (!result.Status)
             return Unauthorized(new { message = result.Message });
 
+        var accessCookieOpt = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Expires = DateTime.UtcNow.AddMinutes(60)
+        };
+
+        var refreshCookie = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.None,
+            Expires = DateTime.UtcNow.AddDays(3)
+        };
+
+        Response.Cookies.Append("accessToken", result.AccessToken, accessCookieOpt);
+        Response.Cookies.Append("refreshToken", result.RefreshToken, refreshCookie);
+
+
         return Ok(result);
 
+    }
+
+    [HttpGet("me")]
+    public async Task<IActionResult> Me()
+    {
+        var accessToken = Request.Cookies["accessToken"];
+        if (string.IsNullOrEmpty(accessToken))
+            return Unauthorized();
+
+        var handler = new JwtSecurityTokenHandler();
+        var token = handler.ReadJwtToken(accessToken);
+        var sub = token.Claims.FirstOrDefault(c => c.Type == "sub")?.Value;
+        var email = token.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
+
+        return Ok(new { sub, email });
     }
 
 }

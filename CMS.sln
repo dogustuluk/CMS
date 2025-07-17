@@ -9,15 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CMS", "CMS", "{5ADFD429-506
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS.Auth", "CMS.Auth\CMS.Auth.csproj", "{370788BB-8E4E-4114-B680-A35B879A230A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS.Domain", "CMS.Domain\CMS.Domain.csproj", "{FB379198-3C8F-462E-B972-D4696E5BEA0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS.Domain", "CMS.Domain\CMS.Domain.csproj", "{FB379198-3C8F-462E-B972-D4696E5BEA0C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS.Application", "CMS.Application\CMS.Application.csproj", "{37D8F008-2270-4F71-B193-DC663D57CDD1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS.Application", "CMS.Application\CMS.Application.csproj", "{37D8F008-2270-4F71-B193-DC663D57CDD1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS.Infrastructure", "CMS.Infrastructure\CMS.Infrastructure.csproj", "{642507A7-F9EC-4976-AFC3-DD45E33E6D24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS.Infrastructure", "CMS.Infrastructure\CMS.Infrastructure.csproj", "{642507A7-F9EC-4976-AFC3-DD45E33E6D24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS.Persistence", "CMS.Persistence\CMS.Persistence.csproj", "{FFD6D942-B4BF-46C8-BE94-35B81120C8FC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS.Persistence", "CMS.Persistence\CMS.Persistence.csproj", "{FFD6D942-B4BF-46C8-BE94-35B81120C8FC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CMS.API", "CMS.API\CMS.API.csproj", "{AF5BDE66-9AA0-4CAA-B6C6-3E1AC31ED1D8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CMS.API", "CMS.API\CMS.API.csproj", "{AF5BDE66-9AA0-4CAA-B6C6-3E1AC31ED1D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
