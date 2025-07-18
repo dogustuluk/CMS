@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using CMS.Application.Helpers;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace CMS.Application;
@@ -8,6 +9,8 @@ public static class ServiceRegistration
     {
         services.AddMediatR(cfg =>
             cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+        services.AddScoped<JsonHelper>();
 
         return services;
     }

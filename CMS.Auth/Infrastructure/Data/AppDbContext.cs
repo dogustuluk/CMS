@@ -11,5 +11,6 @@ public class AppDbContext : DbContext
 
     public DbSet<User> Users => Set<User>();
     public DbSet<CMS.Auth.Domain.Tenant> Tenants => Set<CMS.Auth.Domain.Tenant>();
+    public DbSet<Role> Roles => Set<Role>();
 
 }

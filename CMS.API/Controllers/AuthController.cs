@@ -1,4 +1,5 @@
 ﻿using CMS.Application.Features.Commands.Login;
+using CMS.Application.Features.Commands.Register;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using System.IdentityModel.Tokens.Jwt;
@@ -52,6 +53,15 @@ public class AuthController : ControllerBase
         var email = token.Claims.FirstOrDefault(c => c.Type == "email")?.Value;
 
         return Ok(new { sub, email });
+    }
+
+    [HttpPost("register")]
+    public async Task<IActionResult> Register([FromServices] IMediator mediator, [FromBody] RegisterCommand command)
+    {
+        var result = await mediator.Send(command);
+        if (!result.Status)
+            return BadRequest(new { result.Status, result.Message });
+        return Ok(result);
     }
 
     [HttpPost("logout")]

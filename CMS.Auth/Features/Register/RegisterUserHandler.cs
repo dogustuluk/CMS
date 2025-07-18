@@ -21,7 +21,7 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, Register
     {
         var exist = await _appDbContext.Users.AnyAsync(a => a.Email == request.Email && a.UserName == request.Username);
         if (exist)
-            return new RegisterUserResponse(false, "Aynı Kişi Tekrar Kayıt Olamaz");
+            return new RegisterUserResponse(false, "Aynı Kişi Tekrar Kayıt Olamaz", null);
 
         var tenantId = Guid.NewGuid().ToString();
 
@@ -29,6 +29,7 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, Register
         {
             Id = Guid.NewGuid(),
             TenantId = tenantId,
+            RoleId = request.Role,
             UserName = request.Username,
             Email = request.Email,
             PasswordHash = _passwordHasher.Hash(request.Password),
@@ -43,10 +44,11 @@ public class RegisterUserHandler : IRequestHandler<RegisterUserCommand, Register
             CreatedAt = DateTime.UtcNow,
         };
 
+
         await _appDbContext.Users.AddAsync(user);
         await _appDbContext.Tenants.AddAsync(tenant);
         await _appDbContext.SaveChangesAsync();
 
-        return new RegisterUserResponse(true);
+        return new RegisterUserResponse(true, Id: user.Id);
     }
 }

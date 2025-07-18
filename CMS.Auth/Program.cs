@@ -1,4 +1,5 @@
 using CMS.Auth.Extensions;
+using CMS.Auth.Features.AddRole;
 using CMS.Auth.Features.GetUser;
 using CMS.Auth.Features.Login;
 using CMS.Auth.Features.RefreshToken;
@@ -81,6 +82,9 @@ app.MapPostEndpoint<GetUserCommand, GetUserResponse>("/auth/getUser");
 
 //Check Tenant
 app.MapPostEndpoint<ValidateTenantCommand, ValidateTenantResponse>("/auth/validateTenant", isHaveRateLimit: true, limit: 10);
+
+//Add Role
+app.MapPostEndpoint<AddRoleCommand, AddRoleResponse>("/auth/addRole", isHaveRateLimit: true);
 #endregion
 
 
