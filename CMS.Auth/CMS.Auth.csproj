@@ -30,6 +30,10 @@
 
   <ItemGroup>
     <Folder Include="Features\ForgotPassword\" />
+    <Folder Include="Features\GetTenant\" />
+    <Folder Include="Features\UpdateTenant\" />
+    <Folder Include="Features\UpdateRole\" />
+    <Folder Include="Features\UpdateUser\" />
   </ItemGroup>
 
 </Project>

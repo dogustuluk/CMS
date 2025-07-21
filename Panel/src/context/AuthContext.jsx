@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import axiosInstance from '../lib/axios';
+import { register as registerService, fetchMe } from '../services/authService';
+
 
 const AuthContext = createContext(null);
 
@@ -43,13 +45,28 @@ export const AuthProvider = ({ children }) => {
             setUser(null);
         } catch (error) {
             console.error("Logout failed:", error);
-        }    };
+        }
+    };
+
+
+    const registerUser = async (username, email, password, role, tenantName, domain) => {
+        try {
+            await registerService(username, email, password, role, tenantName, domain);
+            const me = await fetchMe();
+            setUser(me);
+        } catch (error) {
+            console.error("Register failed:", error);
+            setUser(null);
+            throw error;
+        }
+    };
 
     return (
-        <AuthContext.Provider value={{ user, loginUser, logoutUser, loading }}>
+        <AuthContext.Provider value={{ user, loginUser, logoutUser, registerUser, loading }}>
             {children}
         </AuthContext.Provider>
     );
+
 };
 
 export const useAuth = () => useContext(AuthContext);

@@ -9,6 +9,9 @@ import PrivateRoute from './PrivateRoutes';
 const DashboardDefault = Loadable(lazy(() => import('views/Dashboard/Default')));
 const UtilsTypography = Loadable(lazy(() => import('views/Utils/Typography')));
 const SamplePage = Loadable(lazy(() => import('views/SamplePage')));
+const RolePage = Loadable(lazy(() => import('views/Roles/index.jsx'))); //loadable lazy ile bir bileþeni dinamik olarak, ihtiyaç olunca (lazy loading) yüklememi saðlar.
+
+
 
 // ==============================|| MAIN ROUTES ||============================== //
 
@@ -23,7 +26,8 @@ const MainRoutes = {
                 { path: '/', element: <DashboardDefault /> },
                 { path: '/dashboard/default', element: <DashboardDefault /> },
                 { path: '/utils/util-typography', element: <UtilsTypography /> },
-                { path: '/sample-page', element: <SamplePage /> }
+                { path: '/sample-page', element: <SamplePage /> },
+                { path: '/roles', element: <RolePage /> }
             ]
         }
     ]
